@@ -57,7 +57,8 @@ def main(base_model_name, weights_file, image_source, predictions_file, model_ou
     print(json.dumps(samples, indent=2))
 
     # save the model to a new full_model file
-    nima.nima_model.save(model_output_file)
+    if model_output_file is not None:
+        nima.nima_model.save(model_output_file)
 
     if predictions_file is not None:
         save_json(samples, predictions_file)
@@ -70,7 +71,7 @@ if __name__ == '__main__':
     parser.add_argument('-w', '--weights-file', help='path of weights file', required=True)
     parser.add_argument('-is', '--image-source', help='image directory or file', required=True)
     parser.add_argument('-pf', '--predictions-file', help='file with predictions', required=False, default=None)
-    parser.add_argument('-mo', '--model-output-file', help='output full model to a file', required=True)
+    parser.add_argument('-mo', '--model-output-file', help='output full model to a file', required=False, default=None)
 
     args = parser.parse_args()
 
