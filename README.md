@@ -1,3 +1,7 @@
+# Modified note
+
+Looking for information on how to use this with Wanderlog code? Go to [WANDERLOG.md](WANDERLOG.md) for build instructions.
+
 # Image Quality Assessment
 
 [![Build Status](https://travis-ci.org/idealo/image-quality-assessment.svg?branch=master)](https://travis-ci.org/idealo/image-quality-assessment)
