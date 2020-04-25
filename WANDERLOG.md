@@ -4,7 +4,7 @@ This model is taken from the the [repository](https://github.com/idealo/image-qu
 
 We use the model to assess quality inside of our app, using TensorFlowJS. Since the original model is run in Python, we need to export it for our use.
 
-# How-to convert the model for Javascript use
+# Setting up the environment
 
 Before starting all of this, clone the repository at https://github.com/hsource/image-quality-assessment instead of the original idealo one, since it has special code.
 
@@ -23,9 +23,9 @@ source bin/activate
 pip install -r src/requirements.txt
 ```
 
-3.  Run the file to run the predictions once and write the model. This is based on the code in `entrypoint.predict.cpu.sh` and in `README.md`. The code to do this is shown below step 4.
+## Creating a full model file
 
-4.  Convert the model to the format needed for TensorflowJS. Based on code from https://www.tensorflow.org/js/tutorials/conversion/import_keras
+Run the file to run the predictions once and write the model. This is based on the code in `entrypoint.predict.cpu.sh` and in `README.md`.
 
 ```sh
 # Start in the project root dir
@@ -45,7 +45,16 @@ for model in technical aesthetic; do
     --image-source tests/test_images/42039.jpg \
     --model-output-file ../models/$model.h5
   cd ..
+done
+```
 
+### Converting the model for TensorflowJS
+
+After creating the full model, you can convert the model to the format needed for TensorflowJS. Based on code from https://www.tensorflow.org/js/tutorials/conversion/import_keras
+
+```sh
+# Start in the project root dir
+for model in technical aesthetic; do
   # Convert to TensorflowJS
   rm -f models/"$model"/*
   mkdir -p models/"$model"
@@ -56,4 +65,17 @@ for model in technical aesthetic; do
 done
 ```
 
-5.  Copy the files over to where you want to save them.
+### Converting to Tensorflow Lite model
+
+After creating the full model, you can convert the model to the format for TensorflowLite. Based on instructions from https://www.tensorflow.org/lite/convert/cmdline#usage
+
+```sh
+# Start in the project root dir
+for model in technical aesthetic; do
+  # Convert to TensorflowLite
+  rm -f models/"$model"/*.tflite
+  tflite_convert \
+    --keras_model_file=models/$model.h5 \
+    --output_file=models/$model.tflite
+done
+```
