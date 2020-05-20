@@ -52,7 +52,7 @@ def main(base_model_name, weights_file, image_source, predictions_file, model_ou
 
     # calc mean scores and add to samples
     for i, sample in enumerate(samples):
-        sample['mean_score_prediction'] = calc_mean_score(predictions[i])
+        sample['mean_score_prediction'] = calc_mean_score(predictions[0][i])
 
     print(json.dumps(samples, indent=2))
 

@@ -38,7 +38,8 @@ class Nima:
         x = Dropout(self.dropout_rate)(self.base_model.output)
         x = Dense(units=self.n_classes, activation='softmax')(x)
 
-        self.nima_model = Model(self.base_model.inputs, x)
+        # Output both the original base-model's output as well as the scores
+        self.nima_model = Model(self.base_model.inputs, [x, self.base_model.output])
 
     def compile(self):
         self.nima_model.compile(optimizer=Adam(lr=self.learning_rate, decay=self.decay), loss=self.loss)
